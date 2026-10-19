@@ -1,0 +1,15 @@
+// ===== ЛЕГЕНДА =====
+graph ER_legend {
+        label="Легенда"; style=dashed; fontsize=12;
+        node [peripheries=1, width=1.2, height=0.5];
+        l1 [label="Сильная\nсущность", shape=box, style=filled, fillcolor="#E3F2FD", color="#1E88E5", penwidth=2];
+        l2 [label="Слабая\nсущность", shape=box, style=filled, fillcolor="#E3F2FD", color="#1E88E5", penwidth=2, peripheries=2];
+        l3 [label="Связь", shape=diamond, style=filled, fillcolor="#FFF9C4", color="#F9A825"];
+        l4 [label="Идентифицирующая\nсвязь", shape=diamond, style=filled, fillcolor="#FFF9C4", color="#F9A825", peripheries=2];
+        l5 [label="Атрибут", shape=ellipse, style=filled, fillcolor="#FFFFFF", color="#546E7A"];
+        l6 [label=<<U>Ключ</U>>, shape=ellipse, style=filled, fillcolor="#FFFFFF", color="#546E7A"];
+        l7 [label=<<U>Частичный ключ<BR/>Слабой сущности</U>>, shape=ellipse, style="dashed,filled", fillcolor="#FFFFFF", color="#546E7A"];
+        l8 [label="Производный\nатрибут", shape=ellipse, style="dashed,filled", fillcolor="#FFFFFF", color="#546E7A"];
+        l1 -- l2 -- l3 -- l4 [style=invis];
+        l5 -- l6 -- l7 -- l8 [style=invis];
+}
