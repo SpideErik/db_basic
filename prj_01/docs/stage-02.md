@@ -3,7 +3,7 @@
 ## Cхема в нотации Чена
 
 (можно нажать для детального просмотра)
-[![](assets/img/sch.svg)](assets/img/sch.svg)
+[![](assets/img/sch.svg)](https://raw.githubusercontent.com/SpideErik/db_basic/prj-01/prj_01/docs/assets/img/sch.svg)
 
 ### Легенда
 ![](assets/img/legend.svg)
