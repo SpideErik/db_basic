@@ -2,7 +2,8 @@
 
 ## Cхема в нотации Чена
 
-![](assets/img/sch.svg)
+(можно нажать для детального просмотра)
+[![](assets/img/sch.svg)](assets/img/sch.svg)
 
 ### Легенда
 ![](assets/img/legend.svg)
