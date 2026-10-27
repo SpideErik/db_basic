@@ -144,11 +144,11 @@ R_WORKS =N= EMP
 POS -1- R_HOLDS
 R_HOLDS =N= EMP
 
-EMP -N- R_BOSS
-EMP -1- R_BOSS
+EMP -Nподчиненный- R_BOSS
+EMP -1начальник- R_BOSS
 
-DEPT -N- R_PARENT
-DEPT -1- R_PARENT
+DEPT -Nдочерний- R_PARENT
+DEPT -1родительский- R_PARENT
 
 EMP -1- R_SICK
 R_SICK =N= SICK
