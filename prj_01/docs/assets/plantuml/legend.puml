@@ -1,0 +1,54 @@
+@startchen
+title Легенда
+
+<style>
+chenEntity {
+  BackgroundColor #E3F2FD
+  LineColor #1E88E5
+}
+chenRelationship {
+  BackgroundColor #FFF9C4
+  LineColor #F9A825
+}
+chenAttribute {
+  BackgroundColor white
+}
+
+/* Стиль для любого частичного ключа (дискриминатора) */
+.discriminator {
+  LineStyle 3-3
+}
+
+/* Настройка обычных линий */
+arrow {
+  LineThickness 1
+}
+
+</style>
+
+entity "Сильная сущность" as E1 {
+  Ключ <<key>>
+  Обычный атрибут
+  Производный атрибут <<derived>>
+  Составной атрибут {
+    Компонент 1
+    Компонент 2
+  }
+}
+
+entity "Слабая сущность" as E2 <<weak>> {
+  Частичный ключ <<key>> <<discriminator>>
+}
+
+relationship "Связь" as R1 {
+}
+
+relationship "Идентифицирующая связь" as R2 <<identifying>> {
+}
+
+E1 -1- R1
+R1 -N- E1
+
+E1 -1- R2
+R2 =N= E2
+@endchen

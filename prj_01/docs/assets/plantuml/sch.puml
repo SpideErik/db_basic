@@ -1,0 +1,179 @@
+@startchen
+
+<style>
+chenEntity {
+  BackgroundColor #E3F2FD
+  LineColor #1E88E5
+}
+chenRelationship {
+  BackgroundColor #FFF9C4
+  LineColor #F9A825
+}
+chenAttribute {
+  BackgroundColor white
+}
+/* Стиль для любого частичного ключа (дискриминатора) */
+.discriminator {
+  LineStyle 3-3
+}
+
+/* Настройка обычных линий */
+arrow {
+  LineThickness 1
+}
+
+</style>
+
+
+
+title ER-диаграмма HR-системы (нотация Чена)
+left to right direction
+
+' ===== Сильные сущности =====
+entity "Отдел" as DEPT {
+  Название <<key>>
+}
+
+entity "Должность" as POS {
+  Название <<key>>
+  Описание
+}
+
+entity "Сотрудник" as EMP {
+  Табельный номер <<key>>
+  Email
+  Роль в системе
+  Дата приёма
+  Дата увольнения
+  Причина увольнения
+  Статус
+  Личные данные {
+    ФИО {
+      Фамилия
+      Имя
+      Отчество
+    }
+    Дата рождения
+    Телефон
+  }
+}
+
+entity "Больничный" as SICK {
+  Номер листа <<key>>
+  Дата начала
+  Дата окончания
+  Статус
+}
+
+entity "Вакансия" as VAC {
+  Код вакансии <<key>>
+  Число мест
+  Требования
+  Дата открытия
+  Дата закрытия
+  Статус
+}
+
+' ===== Слабые сущности =====
+entity "Отпуск" as LEAVE <<weak>> {
+  Дата начала <<key>> <<discriminator>>
+  Тип отпуска
+  Дата окончания
+  Количество дней <<derived>>
+  Статус
+  Дата заявки
+  Дата решения
+  Комментарий
+}
+
+entity "История назначений" as HIST <<weak>> {
+  Дата начала <<key>> <<discriminator>>
+  Дата окончания
+}
+
+entity "Резюме" as CV <<weak>> {
+  Номер резюме <<key>> <<discriminator>>
+  Дата подачи
+  Текущий этап
+  Статус
+  Дата последнего перехода
+}
+
+entity "Собеседование" as INTV <<weak>> {
+  Дата и время начала <<key>> <<discriminator>>
+  Тип
+  Статус
+  Оценка
+  Комментарий
+}
+
+' ===== Обычные связи =====
+relationship "работает в" as R_WORKS {
+}
+relationship "занимает" as R_HOLDS {
+}
+relationship "подчиняется" as R_BOSS {
+}
+relationship "входит в" as R_PARENT {
+}
+relationship "болеет" as R_SICK {
+}
+relationship "согласует" as R_APPR {
+}
+relationship "открывает" as R_OPEN {
+}
+relationship "на должность" as R_FOR {
+}
+relationship "проводит" as R_INTER {
+}
+
+' ===== Идентифицирующие связи (двойной ромб) =====
+relationship "оформляет" as R_LEAVE <<identifying>> {
+}
+relationship "имеет назначения" as R_HIST <<identifying>> {
+}
+relationship "получает" as R_RECV <<identifying>> {
+}
+relationship "проходит" as R_PASS <<identifying>> {
+}
+
+' ===== Линии: = полное участие, - частичное =====
+DEPT -1- R_WORKS
+R_WORKS =N= EMP
+
+POS -1- R_HOLDS
+R_HOLDS =N= EMP
+
+EMP -Nподчиненный- R_BOSS
+EMP -1начальник- R_BOSS
+
+DEPT -Nдочерний- R_PARENT
+DEPT -1родительский- R_PARENT
+
+EMP -1- R_SICK
+R_SICK =N= SICK
+
+EMP -1- R_APPR
+R_APPR -N- LEAVE
+
+DEPT -1- R_OPEN
+R_OPEN =N= VAC
+
+POS -1- R_FOR
+R_FOR =N= VAC
+
+EMP -1- R_INTER
+R_INTER =N= INTV
+
+EMP -1- R_LEAVE
+R_LEAVE =N= LEAVE
+
+EMP -1- R_HIST
+R_HIST =N= HIST
+
+VAC -1- R_RECV
+R_RECV =N= CV
+
+CV -1- R_PASS
+R_PASS =N= INTV
+@endchen
