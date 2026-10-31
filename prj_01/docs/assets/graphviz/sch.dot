@@ -1,0 +1,184 @@
+graph ER_chen {
+    graph [overlap=false, splines=true, sep="+8"];
+    graph [fontname="Arial", rankdir=TB, splines=true, labelloc=t, fontsize=18,
+           label="ER-диаграмма HR-системы (нотация Чена)",
+           nodesep=0.35, ranksep=0.9, pad=0.4];
+    node  [fontname="Arial", fontsize=12];
+    //edge  [fontname="Arial", fontsize=12, penwidth=1.2];
+    edge [penwidth=1.5, fontname="Arial", labelfontname="Arial", labelfontsize=13,
+          labelfontcolor="#C62828", labeldistance=2.2, labelangle=35];
+    // ===== СУЩНОСТИ =====
+    node [shape=box, style=filled, fillcolor="#E3F2FD", color="#1E88E5",
+          penwidth=2, width=1.6, height=0.6, peripheries=1];
+    dept  [label="Отдел"];
+    pos   [label="Должность"];
+    emp   [label="Сотрудник"];
+    sick  [label="Больничный"];
+    vac   [label="Вакансия"];
+
+    // слабые сущности — двойной прямоугольник
+    node [peripheries=2];
+    leave [label="Отпуск"];
+    hist  [label="История\nназначений"];
+    cv    [label="Резюме"];
+    intv  [label="Собеседование"];
+
+    // ===== АТРИБУТЫ (овалы) =====
+    node [shape=ellipse, style=filled, fillcolor="#FFFFFF", color="#546E7A",
+          penwidth=1, width=0.4, height=0.4, peripheries=1];
+
+    // Отдел
+    a_d1 [label=<<U>Название</U>>];
+
+    // Должность
+    a_p1 [label=<<U>Название</U>>];
+    a_p2 [label="Описание"];
+
+    // Сотрудник
+    a_e1  [label=<<U>Табельный номер</U>>];
+    a_e7  [label="E-mail"];
+    a_e8  [label="Роль в системе"];
+    a_e9  [label="Дата приёма"];
+    a_e10 [label="Дата увольнения"];
+    a_e11 [label="Причина\nувольнения"];
+    a_e12 [label="Статус"];
+
+    // Составные атрибуты
+    a_pd  [label="Личные\nданные"];
+    a_fio [label="ФИО"];
+    a_e2  [label="Фамилия"];
+    a_e3  [label="Имя"];
+    a_e4  [label="Отчество"];
+    a_e5  [label="Дата рождения"];
+    a_e6  [label="Телефон"];
+
+    // Больничный
+    a_s1 [label=<<U>Номер листа</U>>];
+    a_s2 [label="Дата начала"];
+    a_s3 [label="Дата окончания"];
+    a_s4 [label="Статус"];
+
+    // Вакансия
+    a_v1 [label=<<U>Код вакансии</U>>];
+    a_v2 [label="Число мест"];
+    a_v3 [label="Требования"];
+    a_v4 [label="Дата открытия"];
+    a_v5 [label="Дата закрытия"];
+    a_v6 [label="Статус"];
+
+    // Отпуск (частичный ключ — подчёркнутый + пунктирный овал)
+    a_l1 [label=<<U>Дата начала</U>>, style="dashed,filled"];
+    a_l2 [label="Тип отпуска"];
+    a_l3 [label="Дата окончания"];
+    a_l4 [label="Количество дней", style="dashed,filled"];   // производный
+    a_l5 [label="Статус"];
+    a_l6 [label="Дата заявки"];
+    a_l7 [label="Дата решения"];
+    a_l8 [label="Комментарий"];
+
+    // История назначений
+    a_h1 [label=<<U>Дата начала</U>>, style="dashed,filled"];
+    a_h2 [label="Дата окончания"];
+
+    // Резюме
+    a_c1 [label=<<U>Номер резюме</U>>, style="dashed,filled"];
+    a_c2 [label="Дата подачи"];
+    a_c3 [label="Текущий этап"];
+    a_c4 [label="Статус"];
+    a_c5 [label="Дата последнего\nперехода"];
+
+    // Собеседование
+    a_i1 [label=<<U>Дата и время<BR/>начала</U>>, style="dashed,filled"];
+    a_i2 [label="Тип"];
+    a_i3 [label="Статус"];
+    a_i4 [label="Оценка (1–5)"];
+    a_i5 [label="Комментарий"];
+
+    // Связи сущность — атрибут
+    edge [penwidth=1];
+    dept -- a_d1;
+    pos  -- {a_p1 a_p2};
+    emp  -- {a_e1 a_e7 a_e8 a_e9 a_e10 a_e11 a_e12 a_pd};
+    a_pd -- {a_fio a_e5 a_e6};
+    a_fio -- {a_e2 a_e3 a_e4};
+    sick -- {a_s1 a_s2 a_s3 a_s4};
+    vac  -- {a_v1 a_v2 a_v3 a_v4 a_v5 a_v6};
+    leave -- {a_l1 a_l2 a_l3 a_l4 a_l5 a_l6 a_l7 a_l8};
+    hist  -- {a_h1 a_h2};
+    cv    -- {a_c1 a_c2 a_c3 a_c4 a_c5};
+    intv  -- {a_i1 a_i2 a_i3 a_i4 a_i5};
+
+    // ===== СВЯЗИ (ромбы) =====
+    node [shape=diamond, style=filled, fillcolor="#FFF9C4", color="#F9A825",
+          penwidth=1.5, width=1.4, height=0.8, peripheries=1];
+    r_works  [label="работает в"];
+    r_holds  [label="занимает"];
+    r_boss   [label="подчиняется"];
+    r_parent [label="входит в"];
+    r_sick   [label="болеет"];
+    r_appr   [label="согласует"];
+    r_open   [label="открывает"];
+    r_for    [label="на должность"];
+    r_inter  [label="проводит"];
+
+    // идентифицирующие связи — двойной ромб
+    node [peripheries=2];
+    r_leave [label="оформляет"];
+    r_hist  [label="имеет\nназначения"];
+    r_recv  [label="получает"];
+    r_pass  [label="проходит"];
+
+    // Линии: одинарная — частичное участие, двойная — полное участие
+    edge [penwidth=1.5, labelfontsize=12];
+
+    // Отдел — Сотрудник (1:N)
+    dept -- r_works [label="1"];
+    r_works -- emp  [label="N", color="black:black"];
+
+    // Должность — Сотрудник (1:N)
+    pos -- r_holds  [label="1"];
+    r_holds -- emp  [label="N", color="black:black"];
+
+    // Рекурсивная: Сотрудник подчиняется Сотруднику (N:1)
+    //emp -- r_boss [label="подчинённый\nN"];
+    //emp -- r_boss [label="руководитель\n1"];
+    emp -- r_boss [label="N"];
+    emp -- r_boss [label="1"];
+
+    // Рекурсивная: Отдел входит в Отдел (N:1)
+    //dept -- r_parent [label="дочерний\nN"];
+    //dept -- r_parent [label="родительский\n1"];
+    dept -- r_parent [label="N"];
+    dept -- r_parent [label="1"];
+
+    // Сотрудник — Больничный (1:N)
+    emp -- r_sick  [label="1"];
+    r_sick -- sick [label="N", color="black:black"];
+
+    // Сотрудник согласует Отпуск (1:N)
+    emp -- r_appr   [label="1"];
+    r_appr -- leave [label="N"];
+
+    // Отдел, Должность — Вакансия (1:N)
+    dept -- r_open [label="1"];
+    r_open -- vac  [label="N", color="black:black"];
+    pos -- r_for   [label="1"];
+    r_for -- vac   [label="N", color="black:black"];
+
+    // Сотрудник проводит Собеседование (1:N)
+    emp -- r_inter  [label="1"];
+    r_inter -- intv [label="N", color="black:black"];
+
+    // Идентифицирующие связи слабых сущностей
+    emp -- r_leave   [label="1", color="black:black"];
+    r_leave -- leave [label="N", color="black:black"];
+
+    emp -- r_hist  [label="1", color="black:black"];
+    r_hist -- hist [label="N", color="black:black"];
+
+    vac -- r_recv [label="1", color="black:black"];
+    r_recv -- cv  [label="N", color="black:black"];
+
+    cv -- r_pass   [label="1", color="black:black"];
+    r_pass -- intv [label="N", color="black:black"];
+}

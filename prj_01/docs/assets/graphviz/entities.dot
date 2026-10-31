@@ -1,0 +1,33 @@
+graph ER_entities {
+    graph [fontname="Arial", rankdir=TB, labelloc=t, fontsize=18,
+           label="ER-диаграмма (нотация Чена): сущности",
+           nodesep=0.8, ranksep=0.5, pad=0.4];
+    node  [fontname="Arial", fontsize=13, shape=box, style=filled,
+           fillcolor="#E3F2FD", color="#1E88E5", penwidth=2,
+           width=2, height=0.6];
+    edge  [style=invis];
+
+    // Левый столбец: сильные сущности
+    subgraph cluster_strong {
+        label="Сильные сущности"; style=rounded; fontsize=14;
+        Отдел -- Должность -- Сотрудник -- Вакансия -- Больничный;
+    }
+
+    // Правый столбец: слабые сущности (двойной прямоугольник)
+    subgraph cluster_weak {
+        label="Слабые сущности"; style=rounded; fontsize=14;
+        node [peripheries=2];
+        Отпуск -- "История назначений" -- Резюме -- Собеседование;
+    }
+
+    // Легенда внизу
+    subgraph cluster_legend {
+        label="Легенда"; style=dashed; fontsize=12;
+        legend_strong [label="Сильная\nсущность"];
+        legend_weak   [label="Слабая\nсущность", peripheries=2];
+    }
+
+    // Невидимые рёбра, чтобы легенда оказалась ниже обоих столбцов
+    Больничный -- legend_strong;
+    Больничный -- legend_weak;
+}
